@@ -48,6 +48,24 @@ class Catalogue {
       .reduce((acc, p) => acc + 1, 0);
     return noProductsAdded;
   }
+  searchProduct(product) {
+    const result = { type: "search", productIds: [] };
+    if(product.price){
+    result.productIds = this.products
+      .filter((p) => p.price <= product.price )
+      .map((p) => p.id);
+    return result;
+    }
+    if(product.keyword){
+    result.productIds = this.products
+      .filter((p) => p.name.search(product.keyword) >= 0 )
+      .map((p) => p.id);
+    return result;
+    }
+    else{
+      throw new Error("Bad Search");
+    }
+  }
 
 }
 module.exports = Catalogue;

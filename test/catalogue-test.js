@@ -92,4 +92,17 @@ describe("Catalogue", () => {
         expect(rejectedProduct).to.be.undefined; 
       });
 });
+describe("searchProduct", () => {
+    it("should return the products whose price is less than (or equal to) the specified value", function () {
+      const result1 = cat.searchProduct({price:25});
+      expect(result1.productIds).to.have.members(["A123", "A125"]);
+    });
+    it("should return the products with the keyword in their name", function () {
+      const result = cat.searchProduct({keyword:'duct 1'});
+      expect(result.productIds).to.have.members(["A123"]);
+    });
+    it("should be thrown with the message 'Bad search'", function () {
+        expect(() => {cat.searchProduct({keyword:'Widget'}).to.throw("Bad Search")});
+    });
+  });
 });
